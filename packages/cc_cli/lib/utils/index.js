@@ -16,7 +16,7 @@ const utils = {
 	},
 
 	hasGit() {
-		//
+		return true
 	},
 
 	async writeFileTree(dir, files) {
@@ -29,16 +29,12 @@ const utils = {
 			fs.ensureDirSync(path.dirname(filePath))
 			fs.writeFileSync(filePath, files[name])
 		})
-	},
-
-
-
-
+	}
 };
 
 
 
-[ 'module', 'installDeps' ].forEach(mod => {
+[ 'module', 'installDeps', 'spinner' ].forEach(mod => {
 	Object.assign(utils, require('./' + mod))
 })
 
