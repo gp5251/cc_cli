@@ -30,6 +30,8 @@
     "execa": "^3.3.0",
     "inquirer": "^7.0.0",
     "isbinaryfile": "^4.0.2",
-    "ora": "^4.0.2"
+    "jscodeshift": "^0.6.4",
+    "ora": "^4.0.2",
+    "vue-jscodeshift-adapter": "^2.0.2"
   }
 }

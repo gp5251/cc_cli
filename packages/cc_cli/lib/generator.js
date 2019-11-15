@@ -1,6 +1,6 @@
 const fs = require('fs')
 const GeneratorApi = require('./generatorApi')
-const { writeFileTree } = require('./utils')
+const { writeFileTree, runCodemod } = require('./utils')
 
 class Generator {
 	constructor(context, { pkg = {}, plugins = []}) {
@@ -8,8 +8,8 @@ class Generator {
 		this.pkg = pkg;
 		this.plugins = plugins;
 		this.files = {};
-		this.imports = [];
-		this.rootOptions = [];
+		this.imports = {};
+		this.rootOptions = {};
 		this.fileMiddlewares = [];
 	}
 
@@ -36,6 +36,29 @@ class Generator {
 			// 渲染文件到字符串
 			await middleware(files)
 		}
+
+		// handle imports and rootOptions
+		Object.keys(files).forEach(file => {
+			let imports = this.imports[file]
+			imports = imports instanceof Set ? Array.from(imports) : imports
+			if (imports && imports.length > 0) {
+				files[file] = runCodemod(
+					require('./utils/codemods/injectImports'),
+					{ path: file, source: files[file] },
+					{ imports }
+				)
+			}
+
+			let injections = this.rootOptions[file]
+			injections = injections instanceof Set ? Array.from(injections) : injections
+			if (injections && injections.length > 0) {
+				files[file] = runCodemod(
+					require('./utils/codemods/injectOptions'),
+					{ path: file, source: files[file] },
+					{ injections }
+				)
+			}
+		})
 	}
 }
 

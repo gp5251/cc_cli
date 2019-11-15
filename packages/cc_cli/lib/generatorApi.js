@@ -11,6 +11,7 @@ class GeneratorApi {
 		this.name = name;
 		this.options = options;
 		this.rootOptions = rootOptions;
+		this.entryFile = 'src/main.js';
 	}
 
 	render(from, data = {}) {
@@ -36,7 +37,7 @@ class GeneratorApi {
 				}).join('/');
 
 				const sourcePath = path.resolve(source, filePath)
-				Object.assign(data, {options: this.options, rootOptions: this.rootOptions, plugins: this.rootOptions.features})
+				Object.assign(data, {options: this.options, rootOptions: this.rootOptions, plugins: Object.keys(this.rootOptions.plugins)})
 				const content = renderFile(sourcePath, data)
 				// only set file if it's not all whitespace, or is a Buffer (binary files)
 				if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {
@@ -50,12 +51,24 @@ class GeneratorApi {
 		return path.resolve(this.generator.context, _path)
 	}
 
-	injectImports(exp) {
-		this.generator.imports.push(exp);
+	injectImports(file, imports) {
+		const _imports = (
+			this.generator.imports[file] ||
+			(this.generator.imports[file] = new Set())
+		);
+		(Array.isArray(imports) ? imports : [imports]).forEach(imp => {
+			_imports.add(imp)
+		})
 	}
 
-	injectRootOptions(exp) {
-		this.generator.rootOptions.push(exp);
+	injectRootOptions(file, options) {
+		const _options = (
+			this.generator.rootOptions[file] ||
+			(this.generator.rootOptions[file] = new Set())
+		); 
+		(Array.isArray(options) ? options : [options]).forEach(opt => {
+			_options.add(opt)
+		})
 	}
 
 	extendPackage(pkgItem) {

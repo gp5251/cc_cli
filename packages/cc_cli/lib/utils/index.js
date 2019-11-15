@@ -34,7 +34,7 @@ const utils = {
 
 
 
-[ 'module', 'installDeps', 'spinner' ].forEach(mod => {
+[ 'module', 'installDeps', 'spinner', 'runCodemod' ].forEach(mod => {
 	Object.assign(utils, require('./' + mod))
 })
 

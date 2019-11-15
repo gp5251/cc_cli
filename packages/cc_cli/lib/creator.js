@@ -15,7 +15,7 @@ class Creator {
 	async create() {
 		// resolve prompts
 		const answers = await inquirer.prompt(this.prompts);
-		const preset = this.resolvePreset(answers);
+		const preset = this.getPresetPlugins(answers);
 		const context = this.context;
 
 		await clearConsole()
@@ -29,7 +29,7 @@ class Creator {
 			devDependencies: {}
 		}
 
-		Object.assign(pkg.devDependencies, preset.plugins);
+		Object.keys(preset.plugins).forEach(plg => pkg.devDependencies[plg] = "0.0.0");
 
 		await writeFileTree(context, {
 			"package.json": JSON.stringify(pkg, null, 2)
@@ -42,7 +42,7 @@ class Creator {
 
 		// 执行插件代码，生成文件目录
 		console.log(`🚀  Invoking generators...`)
-		const plugins = this.resolvePlugins(preset.features, context);
+		const plugins = this.resolvePlugins(preset.plugins, context);
 		const generator = new Generator(context, {
 			pkg,
 			plugins,
@@ -57,57 +57,66 @@ class Creator {
 		for (const cb of this.createCompleteCbs) await cb();
 
 		// 初始化git状态
-		if (hasGit()) {
-			await execa('git', ['init'], { cwd: context })
+		// if (hasGit()) {
+		// 	await execa('git', ['init'], { cwd: context })
 
-			let msg = typeof git === 'string' ? git : 'init'
-			// await execa('git', ['add', '-A'], { cwd: context })
-			await execa('git', ['commit', '-Am', msg], { cwd: context })
-		}
+		// 	let msg = typeof git === 'string' ? git : 'init'
+		// 	// await execa('git', ['add', '-A'], { cwd: context })
+		// 	await execa('git', ['commit', '-Am', msg], { cwd: context })
+		// }
 
 		// 输出说明
 		console.log('')
 		console.log(`🎉  Successfully created project ${chalk.yellow(this.name)}.`)
 	}
 
-	resolvePreset(answers) {
-		const options = {
-			features: ['cc_service'],
-			plugins: {}
+	getPresetPlugins({preset, features, routerHistoryMode}) {
+		const _preset = {
+			plugins: {
+				'cc_service' : { }
+			}
 		};
 
-		if (answers.preset === 'default') {
-			options.vue_router = true;
-			options.routerHistoryMode = true;
-			options.vuex = true;
-			options.preset = 'default';
-			options.features.push('vuex', 'vue_router');
-		} else {
-			answers.features.forEach(f => {
-				options[f] = true;
-				options.features.push(f);
-				if (f === 'vue_router') {
-					options.routerHistoryMode = answers.routerHistoryMode;
-				}
-			});
-
-			if (answers.cssPreprocessor) {
-				options.vuex = answers.cssPreprocessor;
+		if (preset === 'default') {
+			this.addVuex(_preset);
+			this.addRouter(_preset, true);
+			_preset.plugins.cc_service = {
+				vuex: true,
+				router: true,
+				routerHistoryMode: true
 			}
+		} else {
+			features.includes('vuex') && this.addVuex(_preset);
+			features.includes('vue_router') && this.addRouter(_preset, routerHistoryMode);
+
+			// if (answers.cssPreprocessor) {
+			// 	preset.vuex = answers.cssPreprocessor;
+			// }
 		}
 
-		options.features.forEach(plg => options.plugins[plg === 'cc_service' ? plg : 'cc_plugin_' + plg] = "0.0.0");
-
 		writeFileTree(this.context, {
-			".presetrc": JSON.stringify(options, null, 2)
+			".presetrc": JSON.stringify(_preset, null, 2)
 		});
 
-		return options;
+		return _preset;
+	}
+
+	addVuex(preset) {
+		preset.vuex = true;
+		preset.plugins.cc_plugin_vuex = {};
+		preset.plugins.cc_service.vuex = true;
+	}
+
+	addRouter(preset, routerHistoryMode) {
+		preset.vue_router = true;
+		preset.plugins.cc_plugin_vue_router = { routerHistoryMode };
+		preset.plugins.cc_service.router = true;
+		preset.plugins.cc_service.routerHistoryMode = routerHistoryMode;
 	}
 
 	resolvePlugins(plugins, context) {
-		return Object.values(plugins)
-						.map(plg => ({ name: plg, apply: loadModule(`${plg === 'cc_service' ? plg : 'cc_plugin_' + plg}/generator`, context) }));
+		return Object.keys(plugins)
+						.map(plg => ({ name: plg, apply: loadModule(`${plg}/generator`, context), options: plugins[plg] }));
 	}
 
 }
