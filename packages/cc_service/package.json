@@ -5,8 +5,8 @@
   "bin": {
     "cc_service": "./bin/cc_service.js"
   },
-  "keywords": [],
-  "author": "paul <34345790@qq.com>",
+  "keywords": ["cc", "cli"],
+  "author": "paul",
   "license": "ISC",
   "directories": {
     "lib": "lib",

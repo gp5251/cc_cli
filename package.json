@@ -2,9 +2,25 @@
   "name": "root",
   "workspaces": [
     "packages/*"
-  ],
+	],
+	"scripts": {
+		"test": "jest"
+	},
+  "jest": {
+    "testEnvironment": "node",
+    "setupFiles": [
+      "<rootDir>/scripts/testSetup.js"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.spec.js"
+    ]
+  },
   "private": true,
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
     "lerna": "^3.17.0"
   }
 }

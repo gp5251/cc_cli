@@ -3,6 +3,7 @@ const ejs = require('ejs')
 const chalk = require('chalk')
 const fs = require('fs')
 const globby = require('globby')
+const merge = require('deepmerge')
 const { isBinaryFileSync } = require('isbinaryfile')
 
 class GeneratorApi {
@@ -11,7 +12,19 @@ class GeneratorApi {
 		this.name = name;
 		this.options = options;
 		this.rootOptions = rootOptions;
-		this.entryFile = 'src/main.js';
+		// this._entryFile = 'src/main.js';
+
+		this.pluginsData = generator.plugins
+			.filter(({ id }) => id !== `@vue/cli-service`)
+			.map(({ id }) => ({
+				name: id,
+				link: getPluginLink(id)
+			}))
+	}
+
+	get entryFile() {
+		// if (this._entryFile) return this._entryFile
+		return (this._entryFile = fs.existsSync(this.resolve('src/main.ts')) ? 'src/main.ts' : 'src/main.js')
 	}
 
 	render(from, data = {}) {
@@ -37,7 +50,7 @@ class GeneratorApi {
 				}).join('/');
 
 				const sourcePath = path.resolve(source, filePath)
-				Object.assign(data, {options: this.options, rootOptions: this.rootOptions, plugins: Object.keys(this.rootOptions.plugins)})
+				Object.assign(data, {options: this.options, rootOptions: this.rootOptions, plugins: this.pluginsData})
 				const content = renderFile(sourcePath, data)
 				// only set file if it's not all whitespace, or is a Buffer (binary files)
 				if (Buffer.isBuffer(content) || /[^\s]/.test(content)) {
@@ -72,7 +85,7 @@ class GeneratorApi {
 	}
 
 	extendPackage(pkgItem) {
-		Object.assign(this.generator.pkg, pkgItem);
+		this.generator.pkg = merge(this.generator.pkg, pkgItem);
 	}
 
 	hasPlugin(name) {

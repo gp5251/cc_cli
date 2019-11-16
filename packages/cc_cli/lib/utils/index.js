@@ -1,18 +1,18 @@
 const fs = require('fs-extra')
-const readline = require('readline')
+// const readline = require('readline')
 const path = require('path')
 
 const utils = {
-	async clearConsole(title) {
-		if (process.stdout.isTTY) {
-			const blank = '\n'.repeat(process.stdout.rows)
-			console.log(blank)
-			readline.cursorTo(process.stdout, 0, 0)
-			readline.clearScreenDown(process.stdout)
-			if (title) {
-				console.log(title)
-			}
-		}
+	getPluginLink (id) {
+		let pkg = {}
+		try {
+			pkg = require(`${id}/package.json`)
+		} catch (e) { }
+		return (
+			pkg.homepage ||
+			(pkg.repository && pkg.repository.url) ||
+			`https://www.npmjs.com/package/${id.replace(`/`, `%2F`)}`
+		)
 	},
 
 	hasGit() {
@@ -32,9 +32,7 @@ const utils = {
 	}
 };
 
-
-
-[ 'module', 'installDeps', 'spinner', 'runCodemod' ].forEach(mod => {
+[ 'logger', 'module', 'installDeps', 'spinner', 'runCodemod' ].forEach(mod => {
 	Object.assign(utils, require('./' + mod))
 })
 

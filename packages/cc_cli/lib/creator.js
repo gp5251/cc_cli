@@ -1,4 +1,3 @@
-const execa = require('execa')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const { clearConsole, hasGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('./utils')
@@ -15,7 +14,7 @@ class Creator {
 	async create() {
 		// resolve prompts
 		const answers = await inquirer.prompt(this.prompts);
-		const preset = this.getPresetPlugins(answers);
+		const preset = this.resolvePreset(answers);
 		const context = this.context;
 
 		await clearConsole()
@@ -46,7 +45,7 @@ class Creator {
 		const generator = new Generator(context, {
 			pkg,
 			plugins,
-			completeCbs: this.createCompleteCbs
+			// completeCbs: this.createCompleteCbs
 		})
 		await generator.generate();
 
@@ -54,7 +53,7 @@ class Creator {
 		await installDeps(context);
 
 		// 完成回调
-		for (const cb of this.createCompleteCbs) await cb();
+		// for (const cb of this.createCompleteCbs) await cb();
 
 		// 初始化git状态
 		// if (hasGit()) {
@@ -70,7 +69,7 @@ class Creator {
 		console.log(`🎉  Successfully created project ${chalk.yellow(this.name)}.`)
 	}
 
-	getPresetPlugins({preset, features, routerHistoryMode}) {
+	resolvePreset({preset, features, routerHistoryMode}) {
 		const _preset = {
 			plugins: {
 				'cc_service' : { }
