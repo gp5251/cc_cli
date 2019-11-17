@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const inquirer = require('inquirer')
 const download = require('download-git-repo');
-const { clearConsole, logWithSpinner, stopSpinner, loadModule, installDeps } = require('./utils')
+const { clearConsole, logWithSpinner, stopSpinner, loadModule, installDeps } = require('cc_utils')
 const Metalsmith = require('metalsmith');
 const ejs = require('ejs');
 

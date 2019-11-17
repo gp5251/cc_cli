@@ -1,6 +1,6 @@
 const fs = require('fs')
 const GeneratorApi = require('./generatorApi')
-const { writeFileTree, runCodemod } = require('./utils')
+const { writeFileTree, runCodemod } = require('cc_utils')
 
 class Generator {
 	constructor(context, { pkg = {}, plugins = []}) {
@@ -43,7 +43,7 @@ class Generator {
 			imports = imports instanceof Set ? Array.from(imports) : imports
 			if (imports && imports.length > 0) {
 				files[file] = runCodemod(
-					require('./utils/codemods/injectImports'),
+					require('cc_utils/lib/codemods/injectImports'),
 					{ path: file, source: files[file] },
 					{ imports }
 				)
@@ -53,7 +53,7 @@ class Generator {
 			injections = injections instanceof Set ? Array.from(injections) : injections
 			if (injections && injections.length > 0) {
 				files[file] = runCodemod(
-					require('./utils/codemods/injectOptions'),
+					require('cc_utils/lib/codemods/injectOptions'),
 					{ path: file, source: files[file] },
 					{ injections }
 				)

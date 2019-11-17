@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const path = require('path')
+const { clearConsole } = require('cc_utils')
 const prompts = require('./prompts')
-const { clearConsole } = require('./utils')
 const Creator = require('./creator')
 
 async function create(projectName, {git, force}) {

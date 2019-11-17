@@ -1,6 +1,7 @@
 const inquirer = require('inquirer')
 const chalk = require('chalk')
-const { clearConsole, hasGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('./utils')
+const execa = require('execa')
+const { clearConsole, hasGit, hasProjectGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('cc_utils')
 const Generator = require('./generator')
 
 class Creator {
@@ -55,13 +56,13 @@ class Creator {
 		// for (const cb of this.createCompleteCbs) await cb();
 
 		// 初始化git状态
-		// if (hasGit()) {
-		// 	await execa('git', ['init'], { cwd: context })
+		if (hasGit() && !hasProjectGit()) {
+			await execa('git', ['init'], { cwd: context })
 
-		// 	let msg = typeof git === 'string' ? git : 'init'
-		// 	// await execa('git', ['add', '-A'], { cwd: context })
-		// 	await execa('git', ['commit', '-Am', msg], { cwd: context })
-		// }
+			let msg = typeof git === 'string' ? git : 'init';
+			await execa('git', ['add', '-A'], { cwd: context })
+			await execa('git', ['commit', '-m', msg], { cwd: context })
+		}
 
 		// 输出说明
 		console.log('')

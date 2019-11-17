@@ -1,4 +1,4 @@
 node_modules
 temp
-packages/demo
+packages/demo*
 .vscode
