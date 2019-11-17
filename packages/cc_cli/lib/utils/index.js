@@ -3,21 +3,17 @@ const fs = require('fs-extra')
 const path = require('path')
 
 const utils = {
-	getPluginLink (id) {
-		let pkg = {}
-		try {
-			pkg = require(`${id}/package.json`)
-		} catch (e) { }
-		return (
-			pkg.homepage ||
-			(pkg.repository && pkg.repository.url) ||
-			`https://www.npmjs.com/package/${id.replace(`/`, `%2F`)}`
-		)
-	},
-
-	hasGit() {
-		return true
-	},
+	// clearConsole (title) {
+	// 	if (process.stdout.isTTY) {
+	// 		const blank = '\n'.repeat(process.stdout.rows)
+	// 		console.log(blank)
+	// 		readline.cursorTo(process.stdout, 0, 0)
+	// 		readline.clearScreenDown(process.stdout)
+	// 		if (title) {
+	// 			console.log(title)
+	// 		}
+	// 	}
+	// },
 
 	async writeFileTree(dir, files) {
 		if (process.env.CC_CLI_SKIP_WRITE) {
@@ -32,7 +28,14 @@ const utils = {
 	}
 };
 
-[ 'logger', 'module', 'installDeps', 'spinner', 'runCodemod' ].forEach(mod => {
+[ 
+	'logger', 
+	'module', 
+	'installDeps', 
+	'spinner', 
+	'runCodemod', 
+	'env' 
+].forEach(mod => {
 	Object.assign(utils, require('./' + mod))
 })
 

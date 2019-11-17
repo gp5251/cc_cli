@@ -4,11 +4,11 @@ const { clearConsole, hasGit, writeFileTree, loadModule, installDeps, logWithSpi
 const Generator = require('./generator')
 
 class Creator {
-	constructor(projectName, context, prompts) {
+	constructor(projectName, context, prompts = []) {
 		this.name = projectName;
 		this.context = context;
 		this.prompts = prompts;
-		this.createCompleteCbs = [];
+		// this.createCompleteCbs = [];
 	}
 
 	async create() {
@@ -44,8 +44,7 @@ class Creator {
 		const plugins = this.resolvePlugins(preset.plugins, context);
 		const generator = new Generator(context, {
 			pkg,
-			plugins,
-			// completeCbs: this.createCompleteCbs
+			plugins
 		})
 		await generator.generate();
 

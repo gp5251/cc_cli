@@ -12,20 +12,22 @@ class GeneratorApi {
 		this.name = name;
 		this.options = options;
 		this.rootOptions = rootOptions;
-		// this._entryFile = 'src/main.js';
 
 		this.pluginsData = generator.plugins
-			.filter(({ id }) => id !== `@vue/cli-service`)
-			.map(({ id }) => ({
-				name: id,
-				link: getPluginLink(id)
+			.filter(({ name }) => name !== `cc_service`)
+			.map(({ nam }) => ({
+				name,
+				link: getPluginLink(name)
 			}))
+
+		this.entryFile = 'src/main.js';
 	}
 
-	get entryFile() {
-		// if (this._entryFile) return this._entryFile
-		return (this._entryFile = fs.existsSync(this.resolve('src/main.ts')) ? 'src/main.ts' : 'src/main.js')
-	}
+	// get entryFile() {
+	// 	return fs.existsSync(this.resolve('src/main.ts')) 
+	// 						? 'src/main.ts' 
+	// 						: 'src/main.js'
+	// }
 
 	render(from, data = {}) {
 		const baseDir = extractCallDir();
@@ -113,6 +115,18 @@ function extractCallDir() {
 	const callSite = obj.stack.split('\n')[3]
 	const fileName = callSite.match(/\s\((.*):\d+:\d+\)$/)[1]
 	return path.dirname(fileName)
+}
+
+function	getPluginLink (id) {
+	let pkg = {}
+	try {
+		pkg = require(`${id}/package.json`)
+	} catch (e) { }
+	return (
+		pkg.homepage ||
+		(pkg.repository && pkg.repository.url) ||
+		`https://www.npmjs.com/package/${id.replace(`/`, `%2F`)}`
+	)
 }
 
 module.exports = GeneratorApi;

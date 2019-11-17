@@ -24,8 +24,9 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/packages/cc_cli/bin/cc_cli.js",
-      "args": ["init", "webpack-aliyun-oss", "test"],
-      "cwd": "${workspaceFolder}/temp"
+      "args": ["init", "gp5251/demo", "demo_init"],
+      "cwd": "${workspaceFolder}/packages",
+			"console": "integratedTerminal"
 		}
 	]
 }
