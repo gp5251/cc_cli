@@ -1,0 +1,36 @@
+{
+  "name": "cc_utils",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "paul <34345790@qq.com>",
+  "homepage": "https://github.com/gp5251/cc_cli#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gp5251/cc_cli.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/gp5251/cc_cli/issues"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "execa": "^3.3.0",
+    "jscodeshift": "^0.6.4",
+    "lru-cache": "^5.1.1",
+    "ora": "^4.0.2",
+    "semver": "^6.3.0",
+    "fs-extra": "^8.1.0",
+    "vue-jscodeshift-adapter": "^2.0.2"
+  }
+}
