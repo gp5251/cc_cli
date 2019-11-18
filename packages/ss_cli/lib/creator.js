@@ -115,7 +115,7 @@ class Creator {
 
 	resolvePlugins(plugins, context) {
 		return Object.keys(plugins)
-						.map(plg => ({ name: plg, apply: loadModule(`${plg}/generator`, context), options: plugins[plg] }));
+						.map(plg => ({ id: plg, apply: loadModule(`${plg}/generator`, context), options: plugins[plg] }));
 	}
 
 }

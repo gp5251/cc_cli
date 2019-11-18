@@ -5,8 +5,8 @@ module.exports = (api, options) => {
 
   api.extendPackage({
     scripts: {
-      'serve': 'cc_service serve',
-      'build': 'cc_service build'
+      'serve': 'ss_service serve',
+      'build': 'ss_service build'
     },
     dependencies: {
       'vue': '^2.6.10'
