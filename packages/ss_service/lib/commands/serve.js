@@ -1,14 +1,20 @@
-const webpack = require('webpack');
-const webpackDevServer = require('webpack-dev-server');
 
 module.exports = (api, options) => {
-	api.chainWebpack(webpackConfig => {
-		//
-	});
-
-	api.registerCommand('serve', ({port = 3000}, rawArgs) => {
+	api.registerCommand('serve', ({port = 8080, host='localhost'}, rawArgs) => {
 		console.log('running serve');
-		// const webpackConfig = api.resolveChainableWebpackConfig();
+
+		const webpack = require('webpack');
+		const webpackDevServer = require('webpack-dev-server');
+
+		const webpackConfig = api.resolveChainableWebpackConfig();
+		const devServerOptions = Object.assign(
+			webpackConfig.devServer || {},
+			options.devServer
+		);
+		const compiler = webpack(webpackConfig);
+
+		webpackDevServer(compiler, devServerOptions);
+
 		// console.log(webpackConfig);
 
 		// const compiler = webpack(webpackConfig);

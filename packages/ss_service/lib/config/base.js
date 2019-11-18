@@ -1,9 +1,14 @@
 const path = require('path');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const ProgressPlugin = require('webpack/lib/ProgressPlugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  context: '/Users/paul/Desktop/My Files/formMaker',
+  // context: '.',
   output: {
-    path: '/Users/paul/Desktop/My Files/formMaker/dist',
+    path: './dist',
     filename: '[name].js',
     publicPath: '/'
   },
@@ -34,7 +39,7 @@ module.exports = {
 		}, {
 			test: /\.(less|css)$/,
 			use: [
-				// isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+				'vue-style-loader',
 				'css-loader',
 				'postcss-loader',
 				'less-loader'
@@ -46,7 +51,7 @@ module.exports = {
 				limit: 8192,
 				name: "[name].[hash:6].[ext]",
 				publicPath: '/fonts/',
-				outputPath: path.resolve('./build/fonts')
+				outputPath: path.resolve('./dist/fonts')
 			}
 		}]
   },
@@ -54,7 +59,7 @@ module.exports = {
     /* config.plugin('vue-loader') */
     new VueLoaderPlugin(),
     /* config.plugin('case-sensitive-paths') */
-    new CaseSensitivePathsPlugin(),
+    // new CaseSensitivePathsPlugin(),
 		/* config.plugin('friendly-errors') */
 		new FriendlyErrorsWebpackPlugin(),
     // new FriendlyErrorsWebpackPlugin(
@@ -72,45 +77,44 @@ module.exports = {
     /* config.plugin('html') */
     new HtmlWebpackPlugin(
       {
-        templateParameters: function () { /* omitted long function */ },
-        template: '/Users/paul/Desktop/My Files/formMaker/public/index.html'
+        template: './public/index.html'
       }
     ),
     /* config.plugin('preload') */
-    new PreloadPlugin(
-      {
-        rel: 'preload',
-        include: 'initial',
-        fileBlacklist: [
-          /\.map$/,
-          /hot-update\.js$/
-        ]
-      }
-    ),
-    /* config.plugin('prefetch') */
-    new PreloadPlugin(
-      {
-        rel: 'prefetch',
-        include: 'asyncChunks'
-      }
-    ),
+    // new PreloadPlugin(
+    //   {
+    //     rel: 'preload',
+    //     include: 'initial',
+    //     fileBlacklist: [
+    //       /\.map$/,
+    //       /hot-update\.js$/
+    //     ]
+    //   }
+    // ),
+    // /* config.plugin('prefetch') */
+    // new PreloadPlugin(
+    //   {
+    //     rel: 'prefetch',
+    //     include: 'asyncChunks'
+    //   }
+    // ),
     /* config.plugin('copy') */
-    new CopyWebpackPlugin(
-      [
-        {
-          from: '/Users/paul/Desktop/My Files/formMaker/public',
-          to: '/Users/paul/Desktop/My Files/formMaker/dist',
-          toType: 'dir',
-          ignore: [
-            '.DS_Store',
-            {
-              glob: 'index.html',
-              matchBase: false
-            }
-          ]
-        }
-      ]
-    )
+    // new CopyWebpackPlugin(
+    //   [
+    //     {
+    //       from: './public',
+    //       to: './dist',
+    //       toType: 'dir',
+    //       ignore: [
+    //         '.DS_Store',
+    //         {
+    //           glob: 'index.html',
+    //           matchBase: false
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // )
   ],
   entry: {
     app: [

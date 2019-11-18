@@ -80,6 +80,9 @@ class Service{
 			process.exit(1);
 		}
 
+		args._.shift();
+		rawArgs.shift();
+
 		// 执行插件注册的代码
 		const {fn} = command;
 		fn(args, rawArgs);
@@ -109,12 +112,16 @@ class Service{
 
 	resolveChainableWebpackConfig() {
 		const env = process.env.NODE_ENV === 'production' ? 'prod' : "dev"; 
-		const webpackConfig = require(`./lib/${env}`)
+		const webpackConfig = require(`./config/${env}`)
 		const chainableConfig = new WebpackChain();
 		chainableConfig.merge(webpackConfig);
 
 		this.webpackChainFns.forEach(fn => fn(chainableConfig))
 		return chainableConfig
+	}
+
+	resolveWebpackConfig(config = this.resolveChainableWebpackConfig()) {
+		//
 	}
 }
 
