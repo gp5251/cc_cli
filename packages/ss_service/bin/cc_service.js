@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// console.log(process.argv.slice(2));
+
 const Service = require('../lib/Service')
 const service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd())
 const rawArgv = process.argv.slice(2)

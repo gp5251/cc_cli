@@ -1,11 +1,10 @@
 {
-  "name": "cc_plugin_vuex",
+  "name": "ss_plugin_vuex",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "paul <34345790@qq.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "lib/cc_plugin_vuex.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"

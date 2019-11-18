@@ -1,7 +1,7 @@
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const execa = require('execa')
-const { clearConsole, hasGit, hasProjectGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('cc_utils')
+const { clearConsole, hasGit, hasProjectGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('ss_utils')
 const Generator = require('./generator')
 
 class Creator {
@@ -72,14 +72,14 @@ class Creator {
 	resolvePreset({preset, features, routerHistoryMode}) {
 		const _preset = {
 			plugins: {
-				'cc_service' : { }
+				'ss_service' : { }
 			}
 		};
 
 		if (preset === 'default') {
 			this.addVuex(_preset);
 			this.addRouter(_preset, true);
-			_preset.plugins.cc_service = {
+			_preset.plugins.ss_service = {
 				vuex: true,
 				router: true,
 				routerHistoryMode: true
@@ -102,15 +102,15 @@ class Creator {
 
 	addVuex(preset) {
 		preset.vuex = true;
-		preset.plugins.cc_plugin_vuex = {};
-		preset.plugins.cc_service.vuex = true;
+		preset.plugins.ss_plugin_vuex = {};
+		preset.plugins.ss_service.vuex = true;
 	}
 
 	addRouter(preset, routerHistoryMode) {
 		preset.vue_router = true;
-		preset.plugins.cc_plugin_vue_router = { routerHistoryMode };
-		preset.plugins.cc_service.router = true;
-		preset.plugins.cc_service.routerHistoryMode = routerHistoryMode;
+		preset.plugins.ss_plugin_vue_router = { routerHistoryMode };
+		preset.plugins.ss_service.router = true;
+		preset.plugins.ss_service.routerHistoryMode = routerHistoryMode;
 	}
 
 	resolvePlugins(plugins, context) {

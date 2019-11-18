@@ -1,6 +1,6 @@
 const fs = require('fs')
 const GeneratorApi = require('./generatorApi')
-const { writeFileTree, runCodemod } = require('cc_utils')
+const { writeFileTree, runCodemod } = require('ss_utils')
 
 class Generator {
 	constructor(context, { pkg = {}, plugins = []}) {
@@ -16,8 +16,8 @@ class Generator {
 	async generate() {
 		// 执行插件代码
 		const preset = loadPreset(this.context);
-		this.plugins.forEach(({ name, apply, options = {} }) => {
-			const gApi = new GeneratorApi(name, this, options, preset);
+		this.plugins.forEach(({ id, apply, options = {} }) => {
+			const gApi = new GeneratorApi(id, this, options, preset);
 			apply(gApi, options);
 		});
 
@@ -43,7 +43,7 @@ class Generator {
 			imports = imports instanceof Set ? Array.from(imports) : imports
 			if (imports && imports.length > 0) {
 				files[file] = runCodemod(
-					require('cc_utils/lib/codemods/injectImports'),
+					require('ss_utils/lib/codemods/injectImports'),
 					{ path: file, source: files[file] },
 					{ imports }
 				)
@@ -53,7 +53,7 @@ class Generator {
 			injections = injections instanceof Set ? Array.from(injections) : injections
 			if (injections && injections.length > 0) {
 				files[file] = runCodemod(
-					require('cc_utils/lib/codemods/injectOptions'),
+					require('ss_utils/lib/codemods/injectOptions'),
 					{ path: file, source: files[file] },
 					{ injections }
 				)

@@ -3,13 +3,13 @@ const fs = require('fs-extra');
 const chalk = require('chalk');
 const inquirer = require('inquirer')
 const download = require('download-git-repo');
-const { clearConsole, logWithSpinner, stopSpinner, loadModule, installDeps } = require('cc_utils')
+const { clearConsole, logWithSpinner, stopSpinner, loadModule, installDeps } = require('ss_utils')
 const Metalsmith = require('metalsmith');
 const ejs = require('ejs');
 
 module.exports = async function (template, appName, {clone, force}) {
 	const context = process.cwd();
-	const gitRepo = template.split('/').join('/cc_template_');
+	const gitRepo = template.split('/').join('/ss_template_');
 	const tplPath = path.resolve(context, appName + '/.template');
 
 	if (fs.existsSync(tplPath)) fs.removeSync(tplPath);

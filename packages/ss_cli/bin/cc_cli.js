@@ -8,7 +8,7 @@ program
 
 program
   .command('create <app-name>')
-  .description('create a new project powered by cc_service')
+  .description('create a new project powered by ss_service')
   .option('-g, --git [message]', 'Force git initialization with initial commit message')
   .option('-n, --no-git', 'Skip git initialization')
   .option('-f, --force', 'Overwrite target directory if it exists')

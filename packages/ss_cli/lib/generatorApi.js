@@ -7,17 +7,17 @@ const merge = require('deepmerge')
 const { isBinaryFileSync } = require('isbinaryfile')
 
 class GeneratorApi {
-	constructor(name, generator, options, rootOptions) {
+	constructor(id, generator, options, rootOptions) {
+		this.id = id;
 		this.generator = generator;
-		this.name = name;
 		this.options = options;
 		this.rootOptions = rootOptions;
 
 		this.pluginsData = generator.plugins
-			.filter(({ name }) => name !== `cc_service`)
-			.map(({ nam }) => ({
-				name,
-				link: getPluginLink(name)
+			.filter(({ id }) => id !== `ss_service`)
+			.map(({ id }) => ({
+				name: id,
+				link: getPluginLink(id)
 			}))
 
 		this.entryFile = 'src/main.js';
@@ -91,8 +91,8 @@ class GeneratorApi {
 	}
 
 	hasPlugin(name) {
-		return "cc_plugin_" + name in this.generator.pkg.devDependencies
-			|| this.generator.pkg.dependencies && ("cc_plugin_" + name in this.generator.pkg.dependencies)
+		return "ss_plugin_" + name in this.generator.pkg.devDependencies
+			|| this.generator.pkg.dependencies && ("ss_plugin_" + name in this.generator.pkg.dependencies)
 	}
 } 
 

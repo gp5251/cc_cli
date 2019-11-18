@@ -1,11 +1,11 @@
 {
-  "name": "cc_service",
+  "name": "ss_service",
   "version": "0.0.0",
   "description": "a cli demo",
   "bin": {
-    "cc_service": "./bin/cc_service.js"
+    "ss_service": "./bin/ss_service.js"
   },
-  "keywords": ["cc", "cli"],
+  "keywords": ["ss", "cli"],
   "author": "paul",
   "license": "ISC",
   "directories": {
@@ -22,6 +22,6 @@
     "node": ">=8"
 	},
 	"dependencies": {
-		"cc_utils": "0.0.0"
+		"ss_utils": "0.0.0"
 	}
 }

@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { clearConsole } = require('cc_utils')
+const { clearConsole } = require('ss_utils')
 const prompts = require('./prompts')
 const Creator = require('./creator')
 
