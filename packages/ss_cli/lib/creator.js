@@ -19,7 +19,7 @@ class Creator {
 		const context = this.context;
 
 		await clearConsole()
-		logWithSpinner(`✨`, `Creating project in ${chalk.yellow(context)}.`)
+		logWithSpinner(`✨`, `正在创建项目： ${chalk.yellow(context)}.`)
 
 		// 生成package.json
 		const pkg = {
@@ -37,11 +37,11 @@ class Creator {
 
 		// 安装依赖
 		stopSpinner();
-		console.log(`⚙  Installing CLI plugins. This might take a while...`)
+		console.log(`⚙  正在安装CLI插件，可能需要花一点时间...`)
 		await installDeps(context);
 
 		// 执行插件代码，生成文件目录
-		console.log(`🚀  Invoking generators...`)
+		console.log(`🚀  正在执行 generators...`)
 		const plugins = this.resolvePlugins(preset.plugins, context);
 		const generator = new Generator(context, {
 			pkg,
@@ -66,7 +66,7 @@ class Creator {
 
 		// 输出说明
 		console.log('')
-		console.log(`🎉  Successfully created project ${chalk.yellow(this.name)}.`)
+		console.log(`🎉  创建项目成功；${chalk.yellow(this.name)}.`)
 	}
 
 	resolvePreset({preset, features, routerHistoryMode}) {

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "paul <34345790@qq.com>",
-  "homepage": "",
+	"homepage": "",
+	"main": "index.js",
   "license": "ISC",
   "directories": {
     "lib": "lib",

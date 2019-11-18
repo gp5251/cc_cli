@@ -1,1 +1,1 @@
-process.env.CC_CLI_TEST = true
+process.env.SS_CLI_TEST = true

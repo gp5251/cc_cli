@@ -2,6 +2,7 @@ const EventEmitter = require('events')
 const chalk = require('chalk')
 const execa = require('execa')
 const readline = require('readline')
+const { hasYarn } = require('./env')
 
 class InstallProgress extends EventEmitter {
   constructor () {
@@ -95,5 +96,6 @@ function executeCommand (command, args, targetDir) {
 }
 
 exports.installDeps = function(targetDir) {
-	return executeCommand('yarn', targetDir)
+	const installManager = hasYarn() ? 'yarn' : 'npm';
+	return executeCommand(installManager, targetDir)
 }
