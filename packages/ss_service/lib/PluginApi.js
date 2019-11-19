@@ -12,6 +12,10 @@ class PluginApi {
 		this.service.commands[name] = {fn, opts: opts || {}}
 	}
 
+	configureWebpack(fn) {
+		this.service.webpackRawConfigFns.push(fn);
+	}
+
 	chainWebpack(fn) {
 		this.service.webpackChainFns.push(fn);
 	}
@@ -22,6 +26,10 @@ class PluginApi {
 
 	resolveChainableWebpackConfig() {
 		return this.service.resolveChainableWebpackConfig()
+	}
+
+	resolveWebpackConfig() {
+		return this.service.resolveWebpackConfig()
 	}
 }
 

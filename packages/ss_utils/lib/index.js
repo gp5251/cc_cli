@@ -33,7 +33,7 @@ const utils = {
 	'installDeps', 
 	'spinner', 
 	'runCodemod', 
-	'env' 
+	'env'
 ].forEach(mod => {
 	Object.assign(utils, require('./' + mod))
 })

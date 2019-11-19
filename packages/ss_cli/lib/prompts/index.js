@@ -22,21 +22,19 @@ const prompts = [
       {
         "name": "Router",
         "value": "vue_router",
-        // "description": "Structure the app with dynamic pages",
-        // "link": "https://router.vuejs.org/"
       },
       {
         "name": "Vuex",
         "value": "vuex",
-        // "description": "Manage the app state with a centralized store",
-        // "link": "https://vuex.vuejs.org/"
       },
       {
-        "name": "CSS Pre-processors",
-        "value": "cssPreprocessor",
-        // "description": "Add support for CSS pre-processors like Sass, Less or Stylus",
-        // "link": "https://cli.vuejs.org/guide/css.html"
-      }
+        "name": "CSS Pre-processors: less",
+        "value": "less",
+			},
+			{
+        "name": "babel",
+        "value": "babel",
+			}
 		],
     "pageSize": 10
   },
@@ -47,31 +45,6 @@ const prompts = [
     // "description": "By using the HTML5 History API, the URLs don't need the '#' character anymore.",
     // "link": "https://router.vuejs.org/guide/essentials/history-mode.html",
 		when: answers => answers.features && answers.features.includes('vue_router')
-  },
-  {
-    "name": "cssPreprocessor",
-    "type": "list",
-    "message": "Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are supported by default):",
-    // "description": "PostCSS, Autoprefixer and CSS Modules are supported by default.",
-    "choices": [
-      {
-        "name": "Sass/SCSS (with dart-sass)",
-        "value": "dart-sass"
-      },
-      {
-        "name": "Sass/SCSS (with node-sass)",
-        "value": "node-sass"
-      },
-      {
-        "name": "Less",
-        "value": "less"
-      },
-      {
-        "name": "Stylus",
-        "value": "stylus"
-      }
-    ],
-    when: answers => answers.features && answers.features.includes('cssPreprocessor'),
   }
 ];
 

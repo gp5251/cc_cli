@@ -3,6 +3,7 @@ const chalk = require('chalk')
 const execa = require('execa')
 const { clearConsole, hasGit, hasProjectGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('ss_utils')
 const Generator = require('./generator')
+const featuresHandler = require('./features')
 
 class Creator {
 	constructor(projectName, context, prompts = []) {
@@ -77,20 +78,19 @@ class Creator {
 		};
 
 		if (preset === 'default') {
-			this.addVuex(_preset);
-			this.addRouter(_preset, true);
+			featuresHandler('vuex')(_preset);
+			featuresHandler('vue_router')(_preset, {routerHistoryMode: true});
+
 			_preset.plugins.ss_service = {
 				vuex: true,
 				router: true,
 				routerHistoryMode: true
 			}
 		} else {
-			features.includes('vuex') && this.addVuex(_preset);
-			features.includes('vue_router') && this.addRouter(_preset, routerHistoryMode);
-
-			// if (answers.cssPreprocessor) {
-			// 	preset.vuex = answers.cssPreprocessor;
-			// }
+			features.forEach(feature => {
+				const fn = featuresHandler(feature);
+				if (fn) fn(_preset, {routerHistoryMode})
+			});
 		}
 
 		writeFileTree(this.context, {
@@ -98,19 +98,6 @@ class Creator {
 		});
 
 		return _preset;
-	}
-
-	addVuex(preset) {
-		preset.vuex = true;
-		preset.plugins.ss_plugin_vuex = {};
-		preset.plugins.ss_service.vuex = true;
-	}
-
-	addRouter(preset, routerHistoryMode) {
-		preset.vue_router = true;
-		preset.plugins.ss_plugin_vue_router = { routerHistoryMode };
-		preset.plugins.ss_service.router = true;
-		preset.plugins.ss_service.routerHistoryMode = routerHistoryMode;
 	}
 
 	resolvePlugins(plugins, context) {

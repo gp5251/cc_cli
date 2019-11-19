@@ -1,6 +1,7 @@
 const path = require('path');
-// const merge = require('webpack-merge')
+const merge = require('webpack-merge')
 const WebpackChain = require('webpack-chain')
+const deepClone = require('lodash.clonedeep')
 const fs = require('fs-extra');
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
@@ -13,6 +14,7 @@ class Service{
 		this.initialized = false
 		this.context = context
 		this.webpackChainFns = []
+		this.webpackRawConfigFns = []
 		this.commands = {}
 		// this.pkgContext = context
 		this.pkg = require(path.resolve(context, 'package.json'))
@@ -35,21 +37,27 @@ class Service{
 
 		// 加载用户配置
 		let userOptions = {};
-		let userOptionsPath = path.resolve(this.context, 'ss.confgi.js');
+		let userOptionsPath = path.resolve(this.context, 'ss.config.js');
 		if (fs.existsSync(userOptionsPath)) {
 			userOptions = require(userOptionsPath);
 		}
 
+		let defaultOptions = require('./config/userConfigDefaults')
+		this.projectOptions = deepClone(defaultOptions, userOptions)
+
 		// 加载插件
 		this.plugins.forEach(({id, apply}) => {
 			const api = new PluginApi(id, this);
-			apply(api, userOptions);
+			apply(api, this.projectOptions);
 		});
 
 		// 插入用户webpack配置函数
 		let {chainWebpack, configureWebpack} = userOptions;
 		if (chainWebpack) {
 			this.webpackChainFns.push(chainWebpack)
+		}
+		if (configureWebpack) {
+			this.webpackChainFns.push(configureWebpack)
 		}
 	}
 
@@ -76,7 +84,7 @@ class Service{
 
 		const command = this.commands[name]
 		if (!command) {
-			error(`command ${name} 不存在`);
+			console.error(`command ${name} 不存在`);
 			process.exit(1);
 		}
 
@@ -92,6 +100,7 @@ class Service{
 		const buildins = [
 			'./commands/serve.js',
 			'./commands/build.js',
+			'./config/base.js'
 		].map(id => ({id: id.replace(/^\./, 'build-in:'), apply: require(id)}));
 
 		const pkgPlugins = Object.keys(this.pkg.devDependencies || {})
@@ -111,17 +120,24 @@ class Service{
 	}
 
 	resolveChainableWebpackConfig() {
-		const env = process.env.NODE_ENV === 'production' ? 'prod' : "dev"; 
-		const webpackConfig = require(`./config/${env}`)
 		const chainableConfig = new WebpackChain();
-		chainableConfig.merge(webpackConfig);
-
 		this.webpackChainFns.forEach(fn => fn(chainableConfig))
 		return chainableConfig
 	}
 
-	resolveWebpackConfig(config = this.resolveChainableWebpackConfig()) {
-		//
+	resolveWebpackConfig(chainableConfig = this.resolveChainableWebpackConfig()) {
+		let config = chainableConfig.toConfig();
+
+		this.webpackRawConfigFns.forEach(fn => {
+			if (typeof fn === 'function') {
+				const res = fn(config)
+				if (res) config = merge(config, res)
+			} else if (fn) {
+				config = merge(config, fn)
+			}
+		})
+
+		return config;
 	}
 }
 

@@ -13,8 +13,8 @@
 			],
 			"program": "${workspaceFolder}/packages/ss_service/bin/ss_service.js",
       "args": ["serve"],
-			"cwd": "${workspaceFolder}/packages/demo"
-			// "console": "integratedTerminal"
+			"cwd": "${workspaceFolder}/packages/demo",
+			"console": "integratedTerminal"
 		},
 		{
 			"type": "node",

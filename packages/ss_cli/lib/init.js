@@ -19,7 +19,10 @@ module.exports = async function (template, appName, {clone, force}) {
 
   download(gitRepo, tplPath, { clone }, async err => {
 		stopSpinner()
-		if (err) logger.fatal('下载模版失败： ' + template + ': ' + err.message.trim())
+		if (err) {
+			console.error('下载模版失败： ' + template + ': ' + err.message.trim());
+			process.exit(1);
+		}
 
 		// const downloadPath = path.resolve(process.cwd(), tplPath);
 		const appPath = path.resolve(process.cwd(), appName);
