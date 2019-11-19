@@ -61,7 +61,7 @@ function executeCommand (command, args, targetDir) {
 
     const child = execa(command, args, {
       cwd: targetDir,
-      stdio: ['inherit', 'inherit', command === 'yarn' ? 'pipe' : 'inherit']
+			stdio: ['inherit', 'inherit', command === 'yarn' ? 'pipe' : 'inherit']
     })
 
     // filter out unwanted yarn output
@@ -97,5 +97,5 @@ function executeCommand (command, args, targetDir) {
 
 exports.installDeps = function(targetDir) {
 	const installManager = hasYarn() ? 'yarn' : 'npm';
-	return executeCommand(installManager, targetDir)
+	return executeCommand(installManager, [installManager === 'yarn' ? '' : 'install'], targetDir)
 }

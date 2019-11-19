@@ -1,3 +1,4 @@
+const path = require('path')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const execa = require('execa')
@@ -20,7 +21,7 @@ class Creator {
 		const context = this.context;
 
 		await clearConsole()
-		logWithSpinner(`✨`, `正在创建项目： ${chalk.yellow(context)}.`)
+		logWithSpinner(`✨`, `正在创建项目： ${chalk.yellow(this.name)}.`)
 
 		// 生成package.json
 		const pkg = {
@@ -67,7 +68,7 @@ class Creator {
 
 		// 输出说明
 		console.log('')
-		console.log(`🎉  创建项目成功；${chalk.yellow(this.name)}.`)
+		console.log(`🎉  创建项目成功；${chalk.yellow(this.name)}. 位于 ${chalk.yellow(context)}`)
 	}
 
 	resolvePreset({preset, features, routerHistoryMode}) {
