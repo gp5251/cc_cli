@@ -12,7 +12,7 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/packages/ss_service/bin/ss_service.js",
-      "args": ["build"],
+      "args": ["build", "--clean"],
 			"cwd": "${workspaceFolder}/packages/demo",
 			"console": "integratedTerminal"
 		},

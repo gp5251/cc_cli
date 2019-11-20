@@ -5,10 +5,10 @@ module.exports = api => {
 		const isProduction = process.env.NODE_ENV === 'production'
 		const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-		if (isProduction)
+		if (isProduction) 
 			config.module
 				.rule('less')
-				.test(/\.(less|css)$/)
+				.test(/\.less$/)
 				.exclude
 					.add(/node_modules/)
 					.end()
@@ -17,7 +17,7 @@ module.exports = api => {
 		else 
 			config.module
 				.rule('less')
-				.test(/\.(less|css)$/)
+				.test(/\.less$/)
 				.exclude
 					.add(/node_modules/)
 					.end()

@@ -1,12 +1,14 @@
-const deepClone = require('lodash.clonedeep')
+const fs = require('fs-extra')
+// const deepClone = require('lodash.clonedeep')
 const {logWithSpinner, stopSpinner} = require('ss_utils')
 
 module.exports = (api, options) => {
-	api.registerCommand('build', args => {
+	api.registerCommand('build', async args => {
 		console.log('running build');
 
 		const merge = require('webpack-merge');
 		const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+		const OptimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
 		const webpack = require('webpack');
 		let webpackConfig = api.resolveWebpackConfig();
 
@@ -40,20 +42,38 @@ module.exports = (api, options) => {
 			plugins: [
 				new MiniCssExtractPlugin({
 					filename: '[name].css'
-				})
+				}),
+				new OptimizeCssnanoPlugin
 			]
-		})
+		});
+
+		if (args.clean) {
+			const targetDir = api.resolve(options.outputDir)
+			await fs.remove(targetDir)
+		}
 
 		logWithSpinner(`正在构建 ...`);
+		webpack(webpackConfig, (err, stats) => {
+			stopSpinner(false);
 
-		webpack(webpackConfig)
-			.run((err, state) => {
-				stopSpinner(false);
-				if (err) console.error(err);
+			if (err) console.error(err);
 
-				console.log('建构完成');
-			});
-	})
+			// if (stat.hasErrors()) {
+			// 	console.error('hasErrors');
+			// }
+
+			const info = stats.toJson();
+
+			if (stats.hasErrors()) {
+				console.error(info.errors);
+			}
+
+			// console.log('webpack', stat);
+
+			console.log('构建完成');
+		});
+
+	});
 }
 
 module.exports.defaultModes = {
