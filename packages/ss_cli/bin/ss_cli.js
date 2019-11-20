@@ -8,10 +8,10 @@ program
 
 program
   .command('create <app-name>')
-  .description('create a new project powered by ss_service')
-  .option('-g, --git [message]', 'Force git initialization with initial commit message')
-  .option('-n, --no-git', 'Skip git initialization')
-  .option('-f, --force', 'Overwrite target directory if it exists')
+  .description('通过ss_service创建一个项目')
+  .option('-g, --git [message]', 'git初始化信息')
+  .option('-n, --no-git', '跳过git初始化')
+  .option('-f, --force', '目标目录存在时覆盖掉目标目录')
   .action((name, cmd) => {
     const options = cleanArgs(cmd)
 
@@ -25,10 +25,40 @@ program
 
 program
   .command('init <template> <app-name>')
-  .description('generate a project from a remote template')
-  .option('-c, --clone', 'Use git clone when fetching remote template')
+  .description('通过远程模版创建项目')
+  .option('-c, --clone', '获取远程模版使用clone的方式')
   .action((template, appName, cmd) => {
     require('../lib/init')(template, appName, cleanArgs(cmd))
+	})
+
+program
+  .command('serve [entry]')
+  .description('快速原型开发')
+  .option('--mode', '使用模式，默认为 development')
+  .action((entry, cmd) => {
+		let func;
+		try{
+			func = require('../../ss_service_global');
+		}catch(e) {
+			console.error(e);
+		};
+
+		if (func) func.serve(entry, cleanArgs(cmd));
+		else process.exit(1);
+	})
+
+program
+  .command('build [entry]')
+  .description('快速原型构建')
+  .option('--mode', '使用模式，默认为 development')
+  .action((entry, cmd) => {
+		let func;
+		try{
+			func = require('ss_service_global');
+		}catch(e) {};
+
+		if (func) func.build(entry, cleanArgs(cmd));
+		else process.exit(1);
   })
 
 program.parse(process.argv)

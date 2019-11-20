@@ -20,7 +20,7 @@ module.exports = (api, options) => {
 			}
 		} else {
 			webpackConfig.entry = {
-				app: api.resolve('./src/main.js')
+				app: api.resolve(api.service.entry)
 			}
 		}
 

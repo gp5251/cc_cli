@@ -9,7 +9,7 @@ const PluginApi = require('./PluginApi')
 const { warn } = require('ss_utils')
 
 class Service{
-	constructor(context) {
+	constructor(context, {plugins}) {
 		process.SS_CLI_SERVICE = this
 		this.initialized = false
 		this.context = context
@@ -17,11 +17,12 @@ class Service{
 		this.webpackRawConfigFns = []
 		this.commands = {}
 		// this.pkgContext = context
-		this.pkg = require(path.resolve(context, 'package.json'))
-		this.plugins = this.resolvePlugins()
+		this.pkg = this.resolvePkg()
+		this.plugins = this.resolvePlugins(plugins)
 		this.modes = this.plugins.reduce((modes, { apply: { defaultModes } }) => {
 			return Object.assign(modes, defaultModes)
-		}, {})
+		}, {});
+		this.entry = process.env.SS_ENTRY || ".src/main.js";
 	}
 
 	init(mode = process.env.SS_CLI_MODE) {
@@ -93,7 +94,7 @@ class Service{
 		}
 	}
 
-	async run(name, args, rawArgs) {
+	async run(name, args) {
 		const mode = args.mode || this.modes[name];
 		process.env.SS_CLI_MODE = mode;
 
@@ -106,35 +107,51 @@ class Service{
 			process.exit(1);
 		}
 
-		args._.shift();
-		rawArgs.shift();
+		args._ && args._.shift();
+		// rawArgs.shift();
 
 		// 执行插件注册的代码
 		const {fn} = command;
-		fn(args, rawArgs);
+		fn(args);
 	}
 
-	resolvePlugins() {
+	resolvePkg() {
+		let pkg = {};
+		try{
+			pkg = require(path.resolve(this.context, 'package.json'))
+		}catch(e) {};
+		return pkg;
+	}
+
+	resolvePlugins(inlinePlugins) {
 		const buildins = [
 			'./commands/serve.js',
 			'./commands/build.js',
 			'./config/base.js'
 		].map(id => ({id: id.replace(/^\./, 'build-in:'), apply: require(id)}));
 
-		const pkgPlugins = Object.keys(this.pkg.devDependencies || {})
-			.concat(Object.keys(this.pkg.dependencies || {}))
-			.filter(id => id.indexOf('ss_plugin_') === 0 && !['ss_plugin_vuex', 'ss_plugin_vue_router'].includes(id))
-			.map(id => {
-				let apply = () => {};
-				try {
-					apply = require(id)
-				} catch (e) {
-					warn(`插件： ${id} 未正确安装.`)
-				}
-				return { id, apply}
-			})
+		let plugins;
 
-		return [...buildins, ...pkgPlugins];
+		if (inlinePlugins) {
+			plugins = buildins.concat(inlinePlugins);
+		} else {
+			const pkgPlugins = Object.keys(this.pkg.devDependencies || {})
+				.concat(Object.keys(this.pkg.dependencies || {}))
+				.filter(id => id.indexOf('ss_plugin_') === 0 && !['ss_plugin_vuex', 'ss_plugin_vue_router'].includes(id))
+				.map(id => {
+					let apply = () => {};
+					try {
+						apply = require(id)
+					} catch (e) {
+						warn(`插件： ${id} 未正确安装.`)
+					}
+					return { id, apply}
+				})
+
+			plugins = [...buildins, ...pkgPlugins];
+		}
+
+		return plugins;
 	}
 
 	resolveChainableWebpackConfig() {

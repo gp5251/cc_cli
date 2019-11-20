@@ -7,6 +7,18 @@
 		{
 			"type": "node",
 			"request": "launch",
+			"name": "ss serve",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/packages/ss_cli/bin/ss_cli.js",
+      "args": ["serve"],
+			"cwd": "${workspaceFolder}/packages/demo_test",
+			"console": "integratedTerminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
 			"name": "build",
 			"skipFiles": [
 				"<node_internals>/**"

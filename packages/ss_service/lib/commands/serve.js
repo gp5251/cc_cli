@@ -25,14 +25,14 @@ module.exports = (api, options) => {
 		);
 
 		// 快速原型
-		const entry = args._[0];
+		const entry = args._ && args._[0];
 		if (entry) {
 			webpackConfig.entry = {
 				app: [api.resolve(entry)]
 			}
 		} else {
 			webpackConfig.entry = {
-				app: [api.resolve('./src/main.js')]
+				app: [api.resolve(api.service.entry)]
 			}
 		}
 
