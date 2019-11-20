@@ -36,7 +36,7 @@ module.exports = (api, options) => {
 			}
 		}
 
-		const compiler = webpack(merge(webpackConfig, {
+		let config = merge(webpackConfig, {
 			mode: 'development',
 			module: {
 				rules: [
@@ -70,10 +70,14 @@ module.exports = (api, options) => {
 			plugins: [
 				new webpack.HotModuleReplacementPlugin
 			]
-		}), (err, stats) => {
+		})
+
+		// console.log('config', config);
+
+		const compiler = webpack(config, (err, stats) => {
 			if (err) console.error(err);
 
-			console.log('stats', stats);
+			// console.log('stats', stats);
 		});
 
 		const server = new webpackDevServer(compiler, Object.assign(defaults, {

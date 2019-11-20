@@ -9,8 +9,8 @@ module.exports = api => {
 			config.module
 				.rule('less')
 				.test(/\.(less|css)$/)
-				.include
-					.add(('src'))
+				.exclude
+					.add(/node_modules/)
 					.end()
 				.use('MiniCssExtractPlugin')
 					.loader(MiniCssExtractPlugin.loader)
@@ -18,8 +18,8 @@ module.exports = api => {
 			config.module
 				.rule('less')
 				.test(/\.(less|css)$/)
-				.include
-					.add(('src'))
+				.exclude
+					.add(/node_modules/)
 					.end()
 				.use('vue-style')
 					.loader('vue-style-loader')

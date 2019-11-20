@@ -12,13 +12,19 @@ module.exports = (api, options) => {
       'vue': '^2.6.10'
     },
     devDependencies: {
-      'vue-template-compiler': '^2.6.10',
-			"css-loader": "^0.28.4"
+      'vue-template-compiler': '^2.6.10'
     },
     browserslist: [
       '> 1%',
       'last 2 versions'
-    ]
+    ],
+    postcss: {
+      plugins: {
+        autoprefixer: {
+					// "overrideBrowserslist": ['last 2 version', '>1%']
+				}
+      }
+    }
   })
 
   // if (options.router) {

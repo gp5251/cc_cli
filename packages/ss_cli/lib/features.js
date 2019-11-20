@@ -16,6 +16,7 @@ const featuresHandler = {
 	less(preset) {
 		preset.less = true;
 		preset.plugins.ss_service.less = true;
+		preset.plugins.ss_plugin_less = {};
 	},
 
 	babel(preset) {
