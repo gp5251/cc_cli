@@ -26,6 +26,26 @@ module.exports = (api, options) => {
 				test: /\.vue$/,
 				exclude: /node_modules/,
 				use: [ 'vue-loader' ]
+			}, {
+				test: /\.(woff|svg|eot|ttf)\??.*$/,
+				use: [{
+					loader: "url-loader",
+					options: {
+						limit: 8192,
+						name: "[name].[hash:6].[ext]",
+						publicPath: '/fonts/',
+						outputPath: path.resolve('./dist/fonts')
+					}
+				}]
+			}, {
+				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+				use: {
+					loader: 'url-loader',
+					options: {
+						limit: 10000,
+						name: path.resolve('./dist/img/[name].[hash:7].[ext]')
+					}
+				}
 			}]
 		},
 		plugins: [

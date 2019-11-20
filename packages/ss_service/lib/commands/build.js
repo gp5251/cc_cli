@@ -8,7 +8,7 @@ module.exports = (api, options) => {
 		const merge = require('webpack-merge');
 		const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 		const webpack = require('webpack');
-		const webpackConfig = api.resolveWebpackConfig();
+		let webpackConfig = api.resolveWebpackConfig();
 
 		// 快速原型
 		const entry = args._[0];
@@ -23,7 +23,8 @@ module.exports = (api, options) => {
 		}
 
 		webpackConfig = merge(webpackConfig, {
-			mode: 'development',
+			mode: 'production',
+			devtool: 'source-map',
 			module: {
 				rules: [
 					{
@@ -43,12 +44,15 @@ module.exports = (api, options) => {
 			]
 		})
 
-		logWithSpinner(`正在构建 ...`)
-		webpack(webpackConfig, (err, stats) => {
-			stopSpinner(false);
+		logWithSpinner(`正在构建 ...`);
 
-			console.log('建构完成');
-		});
+		webpack(webpackConfig)
+			.run((err, state) => {
+				stopSpinner(false);
+				if (err) console.error(err);
+
+				console.log('建构完成');
+			});
 	})
 }
 

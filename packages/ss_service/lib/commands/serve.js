@@ -28,13 +28,18 @@ module.exports = (api, options) => {
 		const entry = args._[0];
 		if (entry) {
 			webpackConfig.entry = {
-				app: api.resolve(entry)
+				app: [api.resolve(entry)]
 			}
 		} else {
 			webpackConfig.entry = {
-				app: api.resolve('./src/main.js')
+				app: [api.resolve('./src/main.js')]
 			}
 		}
+
+		webpackConfig.entry.app.push(
+			'webpack/hot/dev-server',
+			'webpack-dev-server/client?http://localhost:8080',
+		);
 
 		let config = merge(webpackConfig, {
 			mode: 'development',
@@ -47,14 +52,6 @@ module.exports = (api, options) => {
 							'css-loader',
 							'postcss-loader'
 						]
-					// }, {
-					// 	test: /\.less$/,
-					// 	use: [
-					// 		'vue-style-loader',
-					// 		'css-loader',
-					// 		'postcss-loader',
-					// 		'less-loader'
-					// 	]
 					}, {
 						test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
 						use: ['url-loader']
@@ -72,24 +69,22 @@ module.exports = (api, options) => {
 			]
 		})
 
-		// console.log('config', config);
+		const server = new webpackDevServer(webpack(config), Object.assign(defaults, {
+			publicPath: '/',
+			historyApiFallback: true,
+			contentBase: './dist',
+			hot: true,
+			logLevel: 'silent',
+			clientLogLevel: 'silent',
+			progress: true,
+			// watchContentBase: true,
+			quiet: true
+		}));
 
-		const compiler = webpack(config, (err, stats) => {
+		server.listen(8080, 'localhost', (err) => {
 			if (err) console.error(err);
-
-			// console.log('stats', stats);
+			console.log('server is running');
 		});
-
-		const server = new webpackDevServer(compiler, Object.assign(defaults, {
-				clientLogLevel: 'warning',
-				hot: true,
-				contentBase: 'dist',
-				compress: true,
-				// open: true,
-				overlay: { warnings: false, errors: true },
-				publicPath: '/',
-				quiet: true
-			}));
 	})
 }
 
