@@ -1,3 +1,5 @@
+const path = require('path');
+
 class PluginApi {
 	constructor(name, service) {
 		this.name = name;
@@ -30,6 +32,10 @@ class PluginApi {
 
 	resolveWebpackConfig() {
 		return this.service.resolveWebpackConfig()
+	}
+
+	resolve(_path) {
+		return path.resolve(this.service.context, _path);
 	}
 }
 

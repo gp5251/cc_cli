@@ -2,13 +2,13 @@ module.exports = (api, options) => {
 	api.extendPackage({
 		babel: {
 			"presets": [
-				[
-					"@babel/preset-env",
-					{
-						"modules": false,
-						"useBuiltIns": "usage"
-					}
-				]
+				// [
+					"@babel/preset-env"
+					// {
+					// 	"modules": false,
+					// 	"useBuiltIns": "usage"
+					// }
+				// ]
 			],
 			"plugins": [
 				"@babel/plugin-transform-runtime",
