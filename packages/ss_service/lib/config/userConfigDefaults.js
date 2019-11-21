@@ -9,8 +9,8 @@ module.exports = {
 		logLevel: 'silent',
 		clientLogLevel: 'silent',
 		progress: true,
-		quiet: true,
-		open: true
+		quiet: true
+		// open: true
 		// watchContentBase: true,
 	}
 };

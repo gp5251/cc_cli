@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge')
 const WebpackChain = require('webpack-chain')
-const deepClone = require('lodash.clonedeep')
+const merge = require('lodash.merge')
 const fs = require('fs-extra');
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
@@ -22,7 +22,7 @@ class Service{
 		this.modes = this.plugins.reduce((modes, { apply: { defaultModes } }) => {
 			return Object.assign(modes, defaultModes)
 		}, {});
-		this.entry = process.env.SS_ENTRY || ".src/main.js";
+		this.entry = process.env.SS_ENTRY || "./src/main.js";
 	}
 
 	init(mode) {
@@ -44,7 +44,7 @@ class Service{
 		}
 
 		let defaultOptions = require('./config/userConfigDefaults')
-		this.projectOptions = deepClone(defaultOptions, userOptions)
+		this.projectOptions = merge(defaultOptions, userOptions)
 
 		// 加载插件
 		this.plugins.forEach(({id, apply}) => {

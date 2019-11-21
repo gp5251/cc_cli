@@ -1,5 +1,4 @@
 const fs = require('fs-extra')
-// const deepClone = require('lodash.clonedeep')
 const {logWithSpinner, stopSpinner} = require('ss_utils')
 
 module.exports = (api, options) => {
