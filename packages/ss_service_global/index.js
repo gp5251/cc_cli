@@ -14,7 +14,25 @@ const context = process.cwd();
 function createService() {
 	return new Service(context, {plugins: [
 		babel,
-		less
+		less,
+		{
+			id: 'ss_service_global_config',
+			apply(api) {
+				api.chainWebpack(config => {
+					const indexFile = findExisting(context, [
+						'index.html',
+						'public/index.html'
+					]) || path.resolve(__dirname, 'template/index.html');
+
+					config
+						.plugin('HtmlWebpackPlugin')
+							.tap(args => {
+								args[0].template = indexFile;
+								return args;
+							})
+				})
+			}
+		}
 	]});
 }
 

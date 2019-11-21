@@ -6,6 +6,7 @@ const webpack = require('webpack')
 
 module.exports = (api, options) => {
 	const context = api.service.context;
+	const isProduction = process.env.NODE_ENV === 'production';
 	const config = {
 		context,
 		output: {
@@ -16,7 +17,7 @@ module.exports = (api, options) => {
 		resolve: {
 			alias: {
 				'@': path.resolve(context, './src'),
-				vue$: 'vue/dist/vue.runtime.esm.js'
+				vue$: isProduction ? 'vue/dist/vue.runtime.esm.js' : 'vue/dist/vue.esm.js'
 			},
 			extensions: [ '.js', '.jsx', '.vue', '.json' ],
 		},
@@ -52,13 +53,21 @@ module.exports = (api, options) => {
 			new VueLoaderPlugin,
 			new webpack.HashedModuleIdsPlugin,
 			new ProgressPlugin,
-			new HtmlWebpackPlugin({ 
-				template: path.resolve(context, './public/index.html'), 
-				filename: 'index.html' 
-			})
+			// new HtmlWebpackPlugin({ 
+			// 	template: path.resolve(context, './public/index.html'), 
+			// 	filename: 'index.html' 
+			// })
 		]
 	}
 
 	api.configureWebpack(config);
+
+	api.chainWebpack(config => {
+		config
+			.plugin("HtmlWebpackPlugin")
+			.use(HtmlWebpackPlugin, [ { 
+				template: path.resolve(context, './public/index.html'), filename: 'index.html' 
+			} ]);
+	});
 }
 	
