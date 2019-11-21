@@ -1,26 +1,11 @@
 {
   "name": "ss_service_global",
   "version": "0.0.0",
-  "description": "Now I’m the model of a modern major general / The venerated Virginian veteran whose men are all / Lining up, to put me up on a pedestal / Writin’ letters to relatives / Embellishin’ my elegance and eloquence / But the elephant is in the room / The truth is in ya face when ya hear the British cannons go / BOOM",
+  "description": "ss_service_global",
   "keywords": [],
   "author": "paul <34345790@qq.com>",
   "license": "ISC",
   "main": "./index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gp5251/cc_cli.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "bugs": {
-    "url": "https://github.com/gp5251/cc_cli/issues"
-  },
-	"homepage": "https://github.com/gp5251/cc_cli#readme",
 	"dependencies": {
 		"ss_service" : "^0.0.0",
 		"ss_plugin_babel": "^0.0.0",

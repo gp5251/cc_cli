@@ -34,7 +34,7 @@ program
 program
   .command('serve [entry]')
   .description('快速原型开发')
-  .option('--mode', '使用模式，默认为 development')
+  .option('-m, --mode <mode>', '使用模式，默认为 development')
   .action((entry, cmd) => {
 		let func;
 		try{
@@ -50,12 +50,14 @@ program
 program
   .command('build [entry]')
   .description('快速原型构建')
-  .option('--mode', '使用模式，默认为 development')
+  .option('-m, --mode <mode>', '使用模式，默认为 development')
   .action((entry, cmd) => {
 		let func;
 		try{
-			func = require('ss_service_global');
-		}catch(e) {};
+			func = require('../../ss_service_global');
+		}catch(e) {
+			console.error(e);
+		};
 
 		if (func) func.build(entry, cleanArgs(cmd));
 		else process.exit(1);

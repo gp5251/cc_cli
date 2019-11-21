@@ -5,14 +5,5 @@
 	"keywords": [],
 	"main": "index.js",
   "author": "paul <34345790@qq.com>",
-  "license": "ISC",
-  "directories": {
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  }
+  "license": "ISC"
 }

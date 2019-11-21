@@ -23,9 +23,9 @@ module.exports = (api, options) => {
 			webpackConfig.devServer || {},
 			options.devServer
 		);
-
-		// 快速原型
-		const entry = args._ && args._[0];
+		
+		// ss_service serve xxx.js
+		const entry = args._[0];
 		if (entry) {
 			webpackConfig.entry = {
 				app: [api.resolve(entry)]

@@ -1,27 +1,10 @@
 {
   "name": "ss_plugin_less",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "description": "ss_plugin_less",
   "author": "paul <34345790@qq.com>",
-  "homepage": "https://github.com/gp5251/cc_cli#readme",
   "license": "ISC",
   "main": "index.js",
-  "directories": {
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gp5251/cc_cli.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "bugs": {
-    "url": "https://github.com/gp5251/cc_cli/issues"
-	},
 	"dependencies": {
 			"less": "^2.7.0",
 			"less-loader": "^4.0.5"

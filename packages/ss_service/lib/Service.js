@@ -9,7 +9,7 @@ const PluginApi = require('./PluginApi')
 const { warn } = require('ss_utils')
 
 class Service{
-	constructor(context, {plugins}) {
+	constructor(context, {plugins} = {}) {
 		process.SS_CLI_SERVICE = this
 		this.initialized = false
 		this.context = context
@@ -106,8 +106,9 @@ class Service{
 			console.error(`command ${name} 不存在`);
 			process.exit(1);
 		}
-
-		args._ && args._.shift();
+		
+		args._ = args._ || [];
+		args._.shift();
 		// rawArgs.shift();
 
 		// 执行插件注册的代码

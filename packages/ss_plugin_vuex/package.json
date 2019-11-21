@@ -1,18 +1,9 @@
 {
   "name": "ss_plugin_vuex",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "description": "ss_plugin_vuex",
   "author": "paul <34345790@qq.com>",
 	"homepage": "",
 	"main": "index.js",
-  "license": "ISC",
-  "directories": {
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  }
+  "license": "ISC"
 }

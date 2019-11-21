@@ -11,8 +11,8 @@ module.exports = (api, options) => {
 		const OptimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
 		const webpack = require('webpack');
 		let webpackConfig = api.resolveWebpackConfig();
-
-		// 快速原型
+		
+		// ss_service build xxx.js
 		const entry = args._[0];
 		if (entry) {
 			webpackConfig.entry = {

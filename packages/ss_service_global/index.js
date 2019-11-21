@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 const Service = require('ss_service');
 const babel = {
 	id: "ss_plungin_babel",
@@ -53,15 +54,11 @@ function resolveEntry(entry) {
 	if (!entry) {
 		console.log(chalk.red(`没有找到入口文件： ${chalk.yellow(context)}.`))
 		console.log(chalk.red(`有效入口文件需要是这些文件之一: main.js, index.js, App.vue 或者 app.vue.`))
-
-		console.log()
 		process.exit(1)
 	}
 
 	if (!fs.existsSync(path.join(context, entry))) {
 		console.log(chalk.red(`入口文件 ${chalk.yellow(entry)} 不存在.`))
-
-		console.log()
 		process.exit(1)
 	}
 
