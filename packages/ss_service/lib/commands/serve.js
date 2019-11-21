@@ -1,4 +1,4 @@
-const merge = require('lodash.merge')
+const lodash_merge = require('lodash.merge')
 const portfinder = require('portfinder')
 
 module.exports = (api, options) => {
@@ -19,7 +19,7 @@ module.exports = (api, options) => {
 		const webpackConfig = api.resolveWebpackConfig();
 
 		// 用户自定义的devServer覆盖掉默认自定义
-		const devServerOptions = merge(
+		const devServerOptions = lodash_merge(
 			webpackConfig.devServer || {},
 			options.devServer
 		);
