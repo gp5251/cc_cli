@@ -24,8 +24,8 @@ module.exports = (api, options) => {
 		// }
 
 		webpackConfig = merge(webpackConfig, {
-			mode: 'production',
-			devtool: 'source-map',
+			mode: api.service.mode,
+			devtool: api.service.mode === 'production' ? 'source-map' : 'cheap-module-source-map',
 			module: {
 				rules: [
 					{
@@ -64,7 +64,7 @@ module.exports = (api, options) => {
 			const info = stats.toJson();
 
 			if (stats.hasErrors()) {
-				console.error(info.errors);
+				console.error(JSON.stringify(info.errors, null, 2));
 			}
 
 			// console.log('webpack', stat);

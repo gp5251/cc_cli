@@ -42,27 +42,17 @@ module.exports = (api, options) => {
 		);
 
 		let config = merge(webpackConfig, {
-			mode: 'development',
+			mode: api.service.mode,
+			devtool: api.service.mode === 'production' ? 'source-map' : 'cheap-module-source-map',
 			module: {
-				rules: [
-					{
-						test: /\.css$/,
-						use: [
-							'vue-style-loader',
-							'css-loader',
-							'postcss-loader'
-						]
-					}, {
-						test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-						use: ['url-loader']
-					}, {
-						test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-						use: ['url-loader']
-					}, {
-						test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-						use: ['url-loader']
-					}
-				]
+				rules: [{
+					test: /\.css$/,
+					use: [
+						'vue-style-loader',
+						'css-loader',
+						'postcss-loader'
+					]
+				}]
 			},
 			plugins: [
 				new webpack.HotModuleReplacementPlugin

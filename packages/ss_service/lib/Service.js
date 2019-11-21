@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge')
 const WebpackChain = require('webpack-chain')
-const merge = require('lodash.merge')
+const lodash_merge = require('lodash.merge')
 const fs = require('fs-extra');
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
@@ -28,6 +28,7 @@ class Service{
 	init(mode) {
 		if (this.initialized) return;
 		this.initialized = true;
+		this.mode = mode;
 
 		// 加载环境变量
 		if (mode) {
@@ -44,7 +45,7 @@ class Service{
 		}
 
 		let defaultOptions = require('./config/userConfigDefaults')
-		this.projectOptions = merge(defaultOptions, userOptions)
+		this.projectOptions = lodash_merge(defaultOptions, userOptions)
 
 		// 加载插件
 		this.plugins.forEach(({id, apply}) => {
