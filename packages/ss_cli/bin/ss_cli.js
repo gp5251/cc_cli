@@ -32,9 +32,25 @@ program
 	})
 
 program
+  .command('add <pluginName>')
+  .description('安装插件')
+  .action((pluginName) => {
+    require('../lib/add')(pluginName)
+	})
+
+program
+  .command('invoke <pluginName>')
+  .description('配置插件')
+  .action((pluginName) => {
+    require('../lib/invoke')(pluginName)
+	})
+
+program
   .command('serve [entry]')
   .description('快速原型开发')
   .option('-m, --mode <mode>', '使用模式，默认为 development')
+  .option('-p, --port <port>', '使用端口，默认为 8080')
+  .option('-h, --host <host>', '使用端口，默认为 localhost')
   .action((entry, cmd) => {
 		let func;
 		try{

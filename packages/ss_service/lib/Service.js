@@ -25,7 +25,7 @@ class Service{
 		this.entry = process.env.SS_ENTRY || ".src/main.js";
 	}
 
-	init(mode = process.env.SS_CLI_MODE) {
+	init(mode) {
 		if (this.initialized) return;
 		this.initialized = true;
 
@@ -96,7 +96,7 @@ class Service{
 
 	async run(name, args) {
 		const mode = args.mode || this.modes[name];
-		process.env.SS_CLI_MODE = mode;
+		// process.env.SS_CLI_MODE = mode;
 
 		// 初始化
 		this.init(mode);
@@ -107,8 +107,8 @@ class Service{
 			process.exit(1);
 		}
 		
-		args._ = args._ || [];
-		args._.shift();
+		// args._ = args._ || [];
+		// args._.shift();
 		// rawArgs.shift();
 
 		// 执行插件注册的代码

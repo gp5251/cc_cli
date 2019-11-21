@@ -7,6 +7,30 @@
 		{
 			"type": "node",
 			"request": "launch",
+			"name": "invoke",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/packages/ss_cli/bin/ss_cli.js",
+      "args": ["invoke", "vue_router"],
+			"cwd": "${workspaceFolder}/packages/demo",
+			"console": "integratedTerminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "add",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/packages/ss_cli/bin/ss_cli.js",
+      "args": ["add", "vue_router"],
+			"cwd": "${workspaceFolder}/packages/demo",
+			"console": "integratedTerminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
 			"name": "ss build",
 			"skipFiles": [
 				"<node_internals>/**"
@@ -24,7 +48,7 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/packages/ss_cli/bin/ss_cli.js",
-      "args": ["serve"],
+      "args": ["serve", "-p", "8000"],
 			"cwd": "${workspaceFolder}/packages/demo_test",
 			"console": "integratedTerminal"
 		},
@@ -48,7 +72,7 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/packages/ss_service/bin/ss_service.js",
-      "args": ["serve"],
+      "args": ["serve", "-p", "8000"],
 			"cwd": "${workspaceFolder}/packages/demo",
 			"console": "integratedTerminal"
 		},

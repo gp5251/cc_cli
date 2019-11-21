@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = api => {
 	api.chainWebpack(config => {
 		const isProduction = process.env.NODE_ENV === 'production'

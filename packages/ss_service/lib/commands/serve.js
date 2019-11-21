@@ -1,21 +1,21 @@
 const deepClone = require('lodash.clonedeep')
+const portfinder = require('portfinder')
 
 module.exports = (api, options) => {
 	const defaults = {
-		host: '0.0.0.0',
-		port: 8080,
-		contentBase: 'dist',
-		publicPath: '/'
+		host: 'localhost',
+		port: 8080
 	}
 
-	api.registerCommand('serve', args => {
+	api.registerCommand('serve', async args => {
 		console.log('running serve');
 
 		const webpack = require('webpack');
 		const webpackDevServer = require('webpack-dev-server');
 		const merge = require('webpack-merge');
-		// const {publicPath, outputDir} = options;
-
+		const host = args.host || process.env.HOST || options.host || defaults.host;
+		portfinder.basePort = args.port || process.env.PORT || options.port || defaults.port;
+		const port = await portfinder.getPortPromise();
 		const webpackConfig = api.resolveWebpackConfig();
 
 		// 用户自定义的devServer覆盖掉默认自定义
@@ -25,16 +25,16 @@ module.exports = (api, options) => {
 		);
 		
 		// ss_service serve xxx.js
-		const entry = args._[0];
-		if (entry) {
-			webpackConfig.entry = {
-				app: [api.resolve(entry)]
-			}
-		} else {
+		// const entry = args._[0];
+		// if (entry) {
+		// 	webpackConfig.entry = {
+		// 		app: [api.resolve(entry)]
+		// 	}
+		// } else {
 			webpackConfig.entry = {
 				app: [api.resolve(api.service.entry)]
 			}
-		}
+		// }
 
 		webpackConfig.entry.app.push(
 			'webpack/hot/dev-server',
@@ -69,21 +69,13 @@ module.exports = (api, options) => {
 			]
 		})
 
-		const server = new webpackDevServer(webpack(config), Object.assign(defaults, {
-			publicPath: '/',
-			historyApiFallback: true,
-			contentBase: './dist',
-			hot: true,
-			logLevel: 'silent',
-			clientLogLevel: 'silent',
-			progress: true,
-			// watchContentBase: true,
-			quiet: true
-		}));
+		const server = new webpackDevServer(webpack(config), devServerOptions);
 
-		server.listen(8080, 'localhost', (err) => {
-			if (err) console.error(err);
-			console.log('server is running');
+		server.listen(port, host, (err) => {
+			if (err)
+				console.error(err);
+			else
+				console.log(`server is running at ${host + ':' + port}`);
 		});
 	})
 }

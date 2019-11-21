@@ -20,7 +20,7 @@ class GeneratorApi {
 				link: getPluginLink(id)
 			}))
 
-		this.entryFile = 'src/main.js';
+		this.entryFile = process.env.SS_ENTRY || 'src/main.js';
 	}
 
 	// get entryFile() {

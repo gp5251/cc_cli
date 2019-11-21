@@ -99,3 +99,8 @@ exports.installDeps = function(targetDir) {
 	const installManager = hasYarn() ? 'yarn' : 'npm';
 	return executeCommand(installManager, [installManager === 'yarn' ? '' : 'install'], targetDir)
 }
+
+exports.installPackage = async function (targetDir, packageName) {
+	const installManager = hasYarn() ? 'yarn' : 'npm';
+	return executeCommand(installManager, [installManager === 'yarn' ? 'add' : 'install', packageName], targetDir)
+}

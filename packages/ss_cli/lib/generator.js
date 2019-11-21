@@ -3,11 +3,11 @@ const GeneratorApi = require('./generatorApi')
 const { writeFileTree, runCodemod } = require('ss_utils')
 
 class Generator {
-	constructor(context, { pkg = {}, plugins = []}) {
+	constructor(context, { pkg = {}, plugins = [], files = {}}) {
 		this.context = context;
 		this.pkg = pkg;
 		this.plugins = plugins;
-		this.files = {};
+		this.files = files;
 		this.imports = {};
 		this.rootOptions = {};
 		this.fileMiddlewares = [];

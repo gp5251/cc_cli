@@ -13,16 +13,16 @@ module.exports = (api, options) => {
 		let webpackConfig = api.resolveWebpackConfig();
 		
 		// ss_service build xxx.js
-		const entry = args._[0];
-		if (entry) {
-			webpackConfig.entry = {
-				app: api.resolve(entry)
-			}
-		} else {
+		// const entry = args._[0];
+		// if (entry) {
+		// 	webpackConfig.entry = {
+		// 		app: api.resolve(entry)
+		// 	}
+		// } else {
 			webpackConfig.entry = {
 				app: api.resolve(api.service.entry)
 			}
-		}
+		// }
 
 		webpackConfig = merge(webpackConfig, {
 			mode: 'production',
