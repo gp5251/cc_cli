@@ -1,9 +1,9 @@
 {
   "name": "ss_plugin_vue_router",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ss_plugin_vue_router",
-	"keywords": [],
-	"main": "index.js",
+  "keywords": [],
+  "main": "index.js",
   "author": "paul <34345790@qq.com>",
   "license": "ISC"
 }

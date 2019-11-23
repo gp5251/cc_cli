@@ -1,6 +1,6 @@
 {
   "name": "ss_utils",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ss_utils",
   "author": "paul <34345790@qq.com>",
   "license": "ISC",
@@ -8,11 +8,11 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "execa": "^3.3.0",
+    "fs-extra": "^8.1.0",
     "jscodeshift": "^0.6.4",
     "lru-cache": "^5.1.1",
     "ora": "^4.0.2",
     "semver": "^6.3.0",
-    "fs-extra": "^8.1.0",
     "vue-jscodeshift-adapter": "^2.0.2"
   }
 }

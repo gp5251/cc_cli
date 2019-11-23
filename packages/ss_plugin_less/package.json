@@ -1,12 +1,12 @@
 {
   "name": "ss_plugin_less",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ss_plugin_less",
   "author": "paul <34345790@qq.com>",
   "license": "ISC",
   "main": "index.js",
-	"dependencies": {
-			"less": "^2.7.0",
-			"less-loader": "^4.0.5"
-	}
+  "dependencies": {
+    "less": "^2.7.0",
+    "less-loader": "^4.0.5"
+  }
 }

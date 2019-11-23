@@ -2,6 +2,7 @@ const path = require('path')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const execa = require('execa')
+const semver = require('semver')
 const { clearConsole, hasGit, hasProjectGit, writeFileTree, loadModule, installDeps, logWithSpinner, stopSpinner } = require('ss_utils')
 const Generator = require('./generator')
 const featuresHandler = require('./features')
@@ -31,7 +32,8 @@ class Creator {
 			devDependencies: {}
 		}
 
-		Object.keys(preset.plugins).forEach(plg => pkg.devDependencies[plg] = "0.0.0");
+		const version = require('../../../package.json').version;
+		Object.keys(preset.plugins).forEach(plg => pkg.devDependencies[plg] = `^${semver.major(version)}.${semver.minor(version)}.0`);
 
 		await writeFileTree(context, {
 			"package.json": JSON.stringify(pkg, null, 2)

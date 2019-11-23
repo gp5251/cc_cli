@@ -1,14 +1,14 @@
 {
-  "name": "ss_service_global",
-  "version": "0.0.0",
-  "description": "ss_service_global",
-  "keywords": [],
-  "author": "paul <34345790@qq.com>",
-  "license": "ISC",
-  "main": "./index.js",
-	"dependencies": {
-		"ss_service" : "^0.0.0",
-		"ss_plugin_babel": "^0.0.0",
-		"ss_plugin_less": "^0.0.0"
-	}
+ "name": "ss_service_global",
+ "version": "0.1.0",
+ "description": "ss_service_global",
+ "keywords": [],
+ "author": "paul <34345790@qq.com>",
+ "license": "ISC",
+ "main": "./index.js",
+ "dependencies": {
+  "ss_plugin_babel": "^0.1.0",
+  "ss_plugin_less": "^0.1.0",
+  "ss_service": "^0.1.0"
+ }
 }

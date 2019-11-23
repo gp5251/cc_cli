@@ -1,9 +1,9 @@
 {
   "name": "ss_plugin_vuex",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ss_plugin_vuex",
   "author": "paul <34345790@qq.com>",
-	"homepage": "",
-	"main": "index.js",
+  "homepage": "",
+  "main": "index.js",
   "license": "ISC"
 }

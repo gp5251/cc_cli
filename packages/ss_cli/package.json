@@ -1,6 +1,6 @@
 {
   "name": "ss_cli",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "a cli demo",
   "bin": {
     "ss": "./bin/ss_cli.js"
@@ -22,7 +22,6 @@
     "node": ">=8"
   },
   "dependencies": {
-    "ss_utils": "0.0.0",
     "chalk": "^3.0.0",
     "commander": "^4.0.1",
     "debug": "^4.1.1",
@@ -35,6 +34,8 @@
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.0",
     "isbinaryfile": "^4.0.2",
-    "metalsmith": "^2.3.0"
+    "metalsmith": "^2.3.0",
+    "semver": "^6.3.0",
+    "ss_utils": "^0.1.0"
   }
 }
