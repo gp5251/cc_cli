@@ -77,12 +77,6 @@ class Service{
 		load(basePath);
 		
 		if (mode) {
-			// always set NODE_ENV during tests
-			// as that is necessary for tests to not be affected by each other
-			// const shouldForceDefaultEnv = (
-			// 	process.env.VUE_CLI_TEST &&
-			// 	!process.env.VUE_CLI_TEST_TESTING_ENV
-			// )
 			const defaultNodeEnv = (mode === 'production' || mode === 'test')
 				? mode
 				: 'development'
