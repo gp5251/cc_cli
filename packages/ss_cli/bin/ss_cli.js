@@ -13,14 +13,7 @@ program
   .option('-n, --no-git', '跳过git初始化')
   .option('-f, --force', '目标目录存在时覆盖掉目标目录')
   .action((name, cmd) => {
-    const options = cleanArgs(cmd)
-
-    // --git makes commander to default git to true
-    if (process.argv.includes('-g') || process.argv.includes('--git')) {
-      options.forceGit = true
-    }
-
-    require('../lib/create')(name, options)
+    require('../lib/create')(name, cleanArgs(cmd))
 	})
 
 program

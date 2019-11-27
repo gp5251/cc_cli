@@ -1,6 +1,6 @@
 'use strict';
 
-const ccCli = require('..');
+const create = require('../lib/create');
 
 describe('cc_cli', () => {
     it('needs tests');

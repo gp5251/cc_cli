@@ -11,16 +11,15 @@ class Generator {
 		this.imports = {};
 		this.rootOptions = {};
 		this.fileMiddlewares = [];
-	}
-
-	async generate() {
 		// 执行插件代码
 		const preset = loadPreset(this.context);
 		this.plugins.forEach(({ id, apply, options = {} }) => {
 			const gApi = new GeneratorApi(id, this, options, preset);
 			apply(gApi, options);
 		});
+	}
 
+	async generate() {
 		// render
 		await this.resolveFiles();
 

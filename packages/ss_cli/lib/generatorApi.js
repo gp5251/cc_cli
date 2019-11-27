@@ -23,12 +23,6 @@ class GeneratorApi {
 		this.entryFile = process.env.SS_ENTRY || 'src/main.js';
 	}
 
-	// get entryFile() {
-	// 	return fs.existsSync(this.resolve('src/main.ts')) 
-	// 						? 'src/main.ts' 
-	// 						: 'src/main.js'
-	// }
-
 	render(from, data = {}) {
 		const baseDir = extractCallDir();
 		if (!fs.existsSync(path.resolve(baseDir, from))) {
