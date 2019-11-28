@@ -36,7 +36,7 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/packages/ss_cli/bin/ss_cli.js",
-      "args": ["build", "index2.js", "--mode", "production"],
+      "args": ["build", "index2.js", "--mode", "development"],
 			"cwd": "${workspaceFolder}/packages/demo_test",
 			"console": "integratedTerminal"
 		},
@@ -48,7 +48,7 @@
 				"<node_internals>/**"
 			],
 			"program": "${workspaceFolder}/packages/ss_cli/bin/ss_cli.js",
-      "args": ["serve", "-p", "8000"],
+      "args": ["serve", "index2.js", "-p", "8000"],
 			"cwd": "${workspaceFolder}/packages/demo_test",
 			"console": "integratedTerminal"
 		},

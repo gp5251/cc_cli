@@ -1,4 +1,3 @@
-// const path = require('path')
 const invoke = require('./invoke')
 const { installPackage } = require('ss_utils')
 

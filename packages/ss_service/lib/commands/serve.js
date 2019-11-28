@@ -24,21 +24,13 @@ module.exports = (api, options) => {
 			options.devServer
 		);
 		
-		// ss_service serve xxx.js
-		// const entry = args._[0];
-		// if (entry) {
-		// 	webpackConfig.entry = {
-		// 		app: [api.resolve(entry)]
-		// 	}
-		// } else {
-			webpackConfig.entry = {
-				app: [api.resolve(api.service.entry)]
-			}
-		// }
+		webpackConfig.entry = {
+			app: [api.resolve(api.service.entry)]
+		}
 
 		webpackConfig.entry.app.push(
 			'webpack/hot/dev-server',
-			'webpack-dev-server/client?http://localhost:8080',
+			'webpack-dev-server/client?http://localhost:' + port,
 		);
 
 		let config = merge(webpackConfig, {

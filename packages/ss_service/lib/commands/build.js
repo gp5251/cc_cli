@@ -11,17 +11,9 @@ module.exports = (api, options) => {
 		const webpack = require('webpack');
 		let webpackConfig = api.resolveWebpackConfig();
 		
-		// ss_service build xxx.js
-		// const entry = args._[0];
-		// if (entry) {
-		// 	webpackConfig.entry = {
-		// 		app: api.resolve(entry)
-		// 	}
-		// } else {
-			webpackConfig.entry = {
-				app: api.resolve(api.service.entry)
-			}
-		// }
+		webpackConfig.entry = {
+			app: api.resolve(api.service.entry)
+		}
 
 		webpackConfig = merge(webpackConfig, {
 			mode: api.service.mode,

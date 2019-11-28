@@ -7,7 +7,7 @@ const { clearConsole, logWithSpinner, stopSpinner, loadModule, installDeps } = r
 const Metalsmith = require('metalsmith');
 const ejs = require('ejs');
 
-module.exports = async function (template, appName, {clone, force}) {
+module.exports = async function (template, appName, {clone}) {
 	const context = process.cwd();
 	const gitRepo = template.split('/').join('/ss_template_');
 	const tplPath = path.resolve(context, appName + '/.template');

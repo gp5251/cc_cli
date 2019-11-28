@@ -32,7 +32,7 @@ class Creator {
 			devDependencies: {}
 		}
 
-		const version = require('../../../package.json').version;
+		const version = require('../package.json').version;
 		Object.keys(preset.plugins).forEach(plg => pkg.devDependencies[plg] = `^${semver.major(version)}.${semver.minor(version)}.0`);
 
 		await writeFileTree(context, {

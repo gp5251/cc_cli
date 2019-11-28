@@ -43,33 +43,31 @@ program
   .description('快速原型开发')
   .option('-m, --mode <mode>', '使用模式，默认为 development')
   .option('-p, --port <port>', '使用端口，默认为 8080')
-  .option('-h, --host <host>', '使用端口，默认为 localhost')
+  .option('-h, --host <host>', '使用主机名，默认为 localhost')
   .action((entry, cmd) => {
 		let func;
 		try{
-			func = require('../../ss_service_global');
+			func = require('ss_service_global');
 		}catch(e) {
 			console.error(e);
 		};
 
 		if (func) func.serve(entry, cleanArgs(cmd));
-		else process.exit(1);
 	})
 
 program
   .command('build [entry]')
   .description('快速原型构建')
-  .option('-m, --mode <mode>', '使用模式，默认为 development')
+  .option('-m, --mode <mode>', '使用模式，默认为 production')
   .action((entry, cmd) => {
 		let func;
 		try{
-			func = require('../../ss_service_global');
+			func = require('ss_service_global');
 		}catch(e) {
 			console.error(e);
 		};
 
 		if (func) func.build(entry, cleanArgs(cmd));
-		else process.exit(1);
   })
 
 program.parse(process.argv)
